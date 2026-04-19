@@ -5,6 +5,7 @@ node_modules
 *.log
 *.tsbuildinfo
 apps/*/dist
+apps/*/.svelte-kit
 .astro
 packages/*/dist
 .env

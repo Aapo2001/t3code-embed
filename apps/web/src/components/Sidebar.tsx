@@ -1,6 +1,8 @@
 import {
   ArchiveIcon,
   ArrowUpDownIcon,
+  BoltIcon,
+  ChevronDownIcon,
   ChevronRightIcon,
   CloudIcon,
   GitPullRequestIcon,
@@ -558,7 +560,7 @@ const SidebarThreadRow = memo(function SidebarThreadRow(props: SidebarThreadRowP
         onKeyDown={handleRowKeyDown}
         onContextMenu={handleRowContextMenu}
       >
-        <div className="flex min-w-0 flex-1 items-center gap-1.5 text-left">
+        <div className="flex min-w-0 flex-1 items-center gap-2 text-left">
           {prStatus && (
             <Tooltip>
               <TooltipTrigger
@@ -592,7 +594,7 @@ const SidebarThreadRow = memo(function SidebarThreadRow(props: SidebarThreadRowP
               <TooltipTrigger
                 render={
                   <span
-                    className="min-w-0 flex-1 truncate text-xs"
+                    className="min-w-0 flex-1 truncate text-[12px]"
                     data-testid={`thread-title-${thread.id}`}
                   >
                     {thread.title}
@@ -687,7 +689,7 @@ const SidebarThreadRow = memo(function SidebarThreadRow(props: SidebarThreadRowP
                 )}
                 {jumpLabel ? (
                   <span
-                    className="inline-flex h-5 items-center rounded-full border border-border/80 bg-background/90 px-1.5 font-mono text-[10px] font-medium tracking-tight text-foreground shadow-sm"
+                    className="inline-flex h-5 items-center rounded-full border border-border/80 bg-background/92 px-1.5 font-mono text-[10px] font-medium tracking-tight text-foreground shadow-sm"
                     title={jumpLabel}
                   >
                     {jumpLabel}
@@ -696,8 +698,8 @@ const SidebarThreadRow = memo(function SidebarThreadRow(props: SidebarThreadRowP
                   <span
                     className={`text-[10px] ${
                       isHighlighted
-                        ? "text-foreground/72 dark:text-foreground/82"
-                        : "text-muted-foreground/40"
+                        ? "text-foreground/72 dark:text-foreground/84"
+                        : "text-muted-foreground/44"
                     }`}
                   >
                     {formatRelativeTimeLabel(
@@ -805,7 +807,7 @@ const SidebarProjectThreadList = memo(function SidebarProjectThreadList(
   return (
     <SidebarMenuSub
       ref={attachThreadListAutoAnimateRef}
-      className="mx-1 my-0 w-full translate-x-0 gap-0.5 overflow-hidden px-1.5 py-0"
+      className="mx-1 my-0.5 w-full translate-x-0 gap-1 overflow-hidden px-1.5 py-0"
     >
       {shouldShowThreadPanel && showEmptyThreadState ? (
         <SidebarMenuSubItem className="w-full" data-thread-selection-safe>
@@ -1938,11 +1940,11 @@ const SidebarProjectItem = memo(function SidebarProjectItem(props: SidebarProjec
 
   return (
     <>
-      <div className="group/project-header relative">
+      <div className="group/project-header relative rounded-2xl">
         <SidebarMenuButton
           ref={isManualProjectSorting ? dragHandleProps?.setActivatorNodeRef : undefined}
           size="sm"
-          className={`gap-2 px-2 py-1.5 text-left hover:bg-accent group-hover/project-header:bg-accent group-hover/project-header:text-sidebar-accent-foreground ${
+          className={`gap-2.5 rounded-2xl px-2.5 py-2 text-left hover:bg-accent group-hover/project-header:bg-accent/94 group-hover/project-header:text-sidebar-accent-foreground ${
             isManualProjectSorting ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"
           }`}
           {...(isManualProjectSorting && dragHandleProps ? dragHandleProps.attributes : {})}
@@ -1976,11 +1978,11 @@ const SidebarProjectItem = memo(function SidebarProjectItem(props: SidebarProjec
           )}
           <ProjectFavicon environmentId={project.environmentId} cwd={project.cwd} />
           <span className="flex min-w-0 flex-1 items-center gap-2">
-            <span className="truncate text-xs font-medium text-foreground/90">
+            <span className="truncate text-[12px] font-medium text-foreground/94">
               {project.displayName}
             </span>
             {project.groupedProjectCount > 1 ? (
-              <span className="shrink-0 text-[10px] text-muted-foreground/60">
+              <span className="shrink-0 text-[10px] text-muted-foreground/56">
                 {project.groupedProjectCount} projects
               </span>
             ) : null}
@@ -1999,7 +2001,7 @@ const SidebarProjectItem = memo(function SidebarProjectItem(props: SidebarProjec
                       ? "Remote project"
                       : "Available in multiple environments"
                   }
-                  className="pointer-events-none absolute top-1 right-1.5 inline-flex size-5 items-center justify-center rounded-md text-muted-foreground/50 transition-opacity duration-150 group-hover/project-header:opacity-0 group-focus-within/project-header:opacity-0"
+                  className="pointer-events-none absolute top-1 right-1.5 inline-flex size-5 items-center justify-center rounded-xl text-muted-foreground/50 transition-opacity duration-150 group-hover/project-header:opacity-0 group-focus-within/project-header:opacity-0"
                 />
               }
             >
@@ -2018,7 +2020,7 @@ const SidebarProjectItem = memo(function SidebarProjectItem(props: SidebarProjec
                   type="button"
                   aria-label={`Create new thread in ${project.displayName}`}
                   data-testid="new-thread-button"
-                  className="inline-flex size-5 cursor-pointer items-center justify-center rounded-md text-muted-foreground/70 hover:bg-secondary hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
+                  className="inline-flex size-6 cursor-pointer items-center justify-center rounded-xl text-muted-foreground/70 hover:bg-secondary hover:text-foreground focus-visible:outline-hidden focus-visible:ring-1 focus-visible:ring-ring"
                   onClick={handleCreateThreadClick}
                 >
                   <SquarePenIcon className="size-3.5" />
@@ -2357,20 +2359,20 @@ const SidebarChromeHeader = memo(function SidebarChromeHeader({
 }) {
   const wordmark = (
     <div className="flex items-center gap-2">
-      <SidebarTrigger className="shrink-0 md:hidden" />
+      <SidebarTrigger className="size-8 shrink-0 rounded-xl border border-sidebar-border/80 bg-sidebar-accent/70 md:hidden" />
       <Tooltip>
         <TooltipTrigger
           render={
             <Link
               aria-label="Go to threads"
-              className="ml-1 flex min-w-0 flex-1 cursor-pointer items-center gap-1 rounded-md outline-hidden ring-ring transition-colors hover:text-foreground focus-visible:ring-2"
+              className="ml-1 inline-flex min-w-0 cursor-pointer items-center gap-2 rounded-xl px-1 py-1 outline-hidden ring-ring transition-colors hover:text-foreground focus-visible:ring-2"
               to="/"
             >
               <T3Wordmark />
-              <span className="truncate text-sm font-medium tracking-tight text-muted-foreground">
+              <span className="truncate text-base font-semibold tracking-tight text-foreground">
                 Code
               </span>
-              <span className="rounded-full bg-muted/50 px-1.5 py-0.5 text-[8px] font-medium uppercase tracking-[0.18em] text-muted-foreground/60">
+              <span className="rounded-full bg-muted/38 px-1.5 py-0.5 text-[8px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70">
                 {APP_STAGE_LABEL}
               </span>
             </Link>
@@ -2384,11 +2386,11 @@ const SidebarChromeHeader = memo(function SidebarChromeHeader({
   );
 
   return isElectron ? (
-    <SidebarHeader className="drag-region h-[52px] flex-row items-center gap-2 px-4 py-0 pl-[90px] wco:h-[env(titlebar-area-height)] wco:pl-[calc(env(titlebar-area-x)+1em)]">
+    <SidebarHeader className="drag-region h-[52px] flex-row items-center gap-2 px-5 py-0 pl-[90px] wco:h-[env(titlebar-area-height)] wco:pl-[calc(env(titlebar-area-x)+1.1em)]">
       {wordmark}
     </SidebarHeader>
   ) : (
-    <SidebarHeader className="gap-3 px-3 py-2 sm:gap-2.5 sm:px-4 sm:py-3">{wordmark}</SidebarHeader>
+    <SidebarHeader className="gap-3 px-4 py-3">{wordmark}</SidebarHeader>
   );
 });
 
@@ -2399,13 +2401,13 @@ const SidebarChromeFooter = memo(function SidebarChromeFooter() {
   }, [navigate]);
 
   return (
-    <SidebarFooter className="p-2">
+    <SidebarFooter className="border-t border-sidebar-border/80 p-3">
       <SidebarUpdatePill />
       <SidebarMenu>
         <SidebarMenuItem>
           <SidebarMenuButton
             size="sm"
-            className="gap-2 px-2 py-1.5 text-muted-foreground/70 hover:bg-accent hover:text-foreground"
+            className="gap-2 rounded-[18px] px-2.5 py-2 text-muted-foreground/82 hover:bg-accent hover:text-foreground"
             onClick={handleSettingsClick}
           >
             <SettingsIcon className="size-3.5" />
@@ -2423,6 +2425,9 @@ interface SidebarProjectsContentProps {
   desktopUpdateButtonAction: "download" | "install" | "none";
   desktopUpdateButtonDisabled: boolean;
   handleDesktopUpdateButtonClick: () => void;
+  handleCreateSession: () => void;
+  handleOpenCommandPalette: () => void;
+  handleOpenCustomize: () => void;
   projectSortOrder: SidebarProjectSortOrder;
   threadSortOrder: SidebarThreadSortOrder;
   projectGroupingMode: SidebarProjectGroupingMode;
@@ -2452,6 +2457,7 @@ interface SidebarProjectsContentProps {
   suppressProjectClickForContextMenuRef: React.RefObject<boolean>;
   attachProjectListAutoAnimateRef: (node: HTMLElement | null) => void;
   projectsLength: number;
+  canCreateSession: boolean;
 }
 
 const SidebarProjectsContent = memo(function SidebarProjectsContent(
@@ -2463,6 +2469,9 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
     desktopUpdateButtonAction,
     desktopUpdateButtonDisabled,
     handleDesktopUpdateButtonClick,
+    handleCreateSession,
+    handleOpenCommandPalette,
+    handleOpenCustomize,
     projectSortOrder,
     threadSortOrder,
     projectGroupingMode,
@@ -2492,6 +2501,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
     suppressProjectClickForContextMenuRef,
     attachProjectListAutoAnimateRef,
     projectsLength,
+    canCreateSession,
   } = props;
 
   const handleProjectSortOrderChange = useCallback(
@@ -2515,14 +2525,14 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
 
   return (
     <SidebarContent className="gap-0">
-      <SidebarGroup className="px-2 pt-2 pb-1">
+      <SidebarGroup className="px-3 pt-2 pb-1">
         <SidebarMenu>
           <SidebarMenuItem>
             <CommandDialogTrigger
               render={
                 <SidebarMenuButton
                   size="sm"
-                  className="gap-2 px-2 py-1.5 text-muted-foreground/70 hover:bg-accent hover:text-foreground focus-visible:ring-0"
+                  className="app-pill h-9 gap-2 px-3 text-muted-foreground/78 hover:bg-accent hover:text-foreground focus-visible:ring-0"
                   data-testid="command-palette-trigger"
                 />
               }
@@ -2535,6 +2545,51 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
                 </Kbd>
               ) : null}
             </CommandDialogTrigger>
+          </SidebarMenuItem>
+        </SidebarMenu>
+      </SidebarGroup>
+      <SidebarGroup className="px-3 py-1">
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              size="sm"
+              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/88 hover:bg-sidebar-accent"
+              disabled={!canCreateSession}
+              onClick={handleCreateSession}
+            >
+              <PlusIcon className="size-3.5" />
+              <span>New session</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              size="sm"
+              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              onClick={handleOpenCommandPalette}
+            >
+              <BoltIcon className="size-3.5" />
+              <span>Routines</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              size="sm"
+              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              onClick={handleOpenCustomize}
+            >
+              <SettingsIcon className="size-3.5" />
+              <span>Customize</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+          <SidebarMenuItem>
+            <SidebarMenuButton
+              size="sm"
+              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/58 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              onClick={openAddProject}
+            >
+              <ChevronDownIcon className="size-3.5" />
+              <span>More</span>
+            </SidebarMenuButton>
           </SidebarMenuItem>
         </SidebarMenu>
       </SidebarGroup>
@@ -2561,10 +2616,10 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
           </Alert>
         </SidebarGroup>
       ) : null}
-      <SidebarGroup className="px-2 py-2">
-        <div className="mb-1 flex items-center justify-between pl-2 pr-1.5">
-          <span className="text-[10px] font-medium uppercase tracking-wider text-muted-foreground/60">
-            Projects
+      <SidebarGroup className="px-3 py-3">
+        <div className="mb-2 flex items-center justify-between pl-1.5 pr-1">
+          <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground/54">
+            Recents
           </span>
           <div className="flex items-center gap-1">
             <ProjectSortMenu
@@ -2582,7 +2637,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
                     type="button"
                     aria-label="Add project"
                     data-testid="sidebar-add-project-trigger"
-                    className="inline-flex size-5 cursor-pointer items-center justify-center rounded-md text-muted-foreground/60 transition-colors hover:bg-accent hover:text-foreground"
+                    className="inline-flex size-6 cursor-pointer items-center justify-center rounded-xl text-muted-foreground/62 transition-colors hover:bg-accent hover:text-foreground"
                     onClick={openAddProject}
                   />
                 }
@@ -2702,6 +2757,7 @@ export default function Sidebar() {
   });
   const routeThreadKey = routeThreadRef ? scopedThreadKey(routeThreadRef) : null;
   const keybindings = useServerKeybindings();
+  const setCommandPaletteOpen = useCommandPaletteStore((store) => store.setOpen);
   const openAddProjectCommandPalette = useCommandPaletteStore((store) => store.openAddProject);
   const [expandedThreadListsByProject, setExpandedThreadListsByProject] = useState<
     ReadonlySet<string>
@@ -2725,6 +2781,7 @@ export default function Sidebar() {
       getId: (project) => scopedProjectKey(scopeProjectRef(project.environmentId, project.id)),
     });
   }, [projectOrder, projects]);
+  const defaultProject = orderedProjects[0] ?? null;
 
   // Build a mapping from physical project key → logical project key for
   // cross-environment grouping.  Projects that share a repositoryIdentity
@@ -2838,6 +2895,19 @@ export default function Sidebar() {
   const newThreadShortcutLabel =
     shortcutLabelForCommand(keybindings, "chat.newLocal", newThreadShortcutLabelOptions) ??
     shortcutLabelForCommand(keybindings, "chat.new", newThreadShortcutLabelOptions);
+  const handleCreateSession = useCallback(() => {
+    if (!defaultProject) {
+      return;
+    }
+
+    void handleNewThread(scopeProjectRef(defaultProject.environmentId, defaultProject.id));
+  }, [defaultProject, handleNewThread]);
+  const handleOpenCommandPalette = useCallback(() => {
+    setCommandPaletteOpen(true);
+  }, [setCommandPaletteOpen]);
+  const handleOpenCustomize = useCallback(() => {
+    void navigate({ to: "/settings" });
+  }, [navigate]);
 
   const navigateToThread = useCallback(
     (threadRef: ScopedThreadRef) => {
@@ -3354,6 +3424,9 @@ export default function Sidebar() {
             desktopUpdateButtonAction={desktopUpdateButtonAction}
             desktopUpdateButtonDisabled={desktopUpdateButtonDisabled}
             handleDesktopUpdateButtonClick={handleDesktopUpdateButtonClick}
+            handleCreateSession={handleCreateSession}
+            handleOpenCommandPalette={handleOpenCommandPalette}
+            handleOpenCustomize={handleOpenCustomize}
             projectSortOrder={sidebarProjectSortOrder}
             threadSortOrder={sidebarThreadSortOrder}
             projectGroupingMode={sidebarProjectGroupingMode}
@@ -3383,6 +3456,7 @@ export default function Sidebar() {
             suppressProjectClickForContextMenuRef={suppressProjectClickForContextMenuRef}
             attachProjectListAutoAnimateRef={attachProjectListAutoAnimateRef}
             projectsLength={projects.length}
+            canCreateSession={defaultProject !== null}
           />
 
           <SidebarSeparator />

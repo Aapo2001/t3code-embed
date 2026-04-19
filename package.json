@@ -29,6 +29,8 @@
     "dev": "node scripts/dev-runner.ts dev",
     "dev:server": "node scripts/dev-runner.ts dev:server",
     "dev:web": "node scripts/dev-runner.ts dev:web",
+    "dev:web-svelte": "node scripts/dev-runner.ts dev:web-svelte",
+    "dev:sveltekit": "node scripts/dev-runner.ts dev:sveltekit",
     "dev:marketing": "turbo run dev --filter=@t3tools/marketing",
     "dev:desktop": "node scripts/dev-runner.ts dev:desktop",
     "start": "turbo run start --filter=t3",
@@ -36,6 +38,7 @@
     "start:marketing": "turbo run preview --filter=@t3tools/marketing",
     "start:mock-update-server": "node scripts/mock-update-server.ts",
     "build": "turbo run build",
+    "build:web-svelte": "turbo run build --filter=@t3tools/web-svelte",
     "build:marketing": "turbo run build --filter=@t3tools/marketing",
     "build:desktop": "turbo run build --filter=@t3tools/desktop --filter=t3",
     "typecheck": "turbo run typecheck",
@@ -86,5 +89,8 @@
   },
   "trustedDependencies": [
     "node-pty"
-  ]
+  ],
+  "dependencies": {
+    "@t3tools/monorepo": "."
+  }
 }

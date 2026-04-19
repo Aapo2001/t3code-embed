@@ -572,8 +572,8 @@ export function BranchToolbarBranchSelector({
       value={resolvedActiveBranch}
     >
       <ComboboxTrigger
-        render={<Button variant="ghost" size="xs" />}
-        className="text-muted-foreground/70 hover:text-foreground/80"
+        render={<Button variant="ghost" size="xs" className="app-pill rounded-xl px-3" />}
+        className="text-muted-foreground/74 hover:text-foreground"
         disabled={(isBranchesSearchPending && branches.length === 0) || isBranchActionPending}
       >
         <span className="max-w-[240px] truncate">{triggerLabel}</span>

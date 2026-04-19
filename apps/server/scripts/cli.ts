@@ -68,21 +68,20 @@ const applyPublishIconOverrides = Effect.fn("applyPublishIconOverrides")(functio
     const sourcePath = path.join(repoRoot, override.sourceRelativePath);
     const targetPath = path.join(serverDir, override.targetRelativePath);
     const backupPath = `${targetPath}.publish-bak`;
+    const targetDir = path.dirname(targetPath);
 
     if (!(yield* fs.exists(sourcePath))) {
       return yield* new CliError({
         message: `Missing publish icon source: ${sourcePath}`,
       });
     }
-    if (!(yield* fs.exists(targetPath))) {
-      return yield* new CliError({
-        message: `Missing publish icon target: ${targetPath}. Run the build subcommand first.`,
-      });
-    }
 
-    yield* fs.copyFile(targetPath, backupPath);
+    yield* fs.makeDirectory(targetDir, { recursive: true });
+    if (yield* fs.exists(targetPath)) {
+      yield* fs.copyFile(targetPath, backupPath);
+      backups.push({ targetPath, backupPath });
+    }
     yield* fs.copyFile(sourcePath, targetPath);
-    backups.push({ targetPath, backupPath });
   }
 
   yield* Effect.log("[cli] Applied publish icon overrides to dist/client");
@@ -111,18 +110,15 @@ const applyDevelopmentIconOverrides = Effect.fn("applyDevelopmentIconOverrides")
   for (const override of DEVELOPMENT_ICON_OVERRIDES) {
     const sourcePath = path.join(repoRoot, override.sourceRelativePath);
     const targetPath = path.join(serverDir, override.targetRelativePath);
+    const targetDir = path.dirname(targetPath);
 
     if (!(yield* fs.exists(sourcePath))) {
       return yield* new CliError({
         message: `Missing development icon source: ${sourcePath}`,
       });
     }
-    if (!(yield* fs.exists(targetPath))) {
-      return yield* new CliError({
-        message: `Missing development icon target: ${targetPath}. Build web first.`,
-      });
-    }
 
+    yield* fs.makeDirectory(targetDir, { recursive: true });
     yield* fs.copyFile(sourcePath, targetPath);
   }
 
@@ -156,15 +152,36 @@ const buildCmd = Command.make(
         }),
       );
 
-      const webDist = path.join(repoRoot, "apps/web/dist");
       const clientTarget = path.join(serverDir, "dist/client");
+      const preferredClient = process.env.T3CODE_WEB_CLIENT?.trim().toLowerCase();
+      const clientCandidates =
+        preferredClient === "sveltekit"
+          ? [
+              { label: "web-svelte", dir: path.join(repoRoot, "apps/web-svelte/build") },
+              { label: "web", dir: path.join(repoRoot, "apps/web/dist") },
+            ]
+          : [
+              { label: "web", dir: path.join(repoRoot, "apps/web/dist") },
+              { label: "web-svelte", dir: path.join(repoRoot, "apps/web-svelte/build") },
+            ];
 
-      if (yield* fs.exists(webDist)) {
-        yield* fs.copy(webDist, clientTarget);
+      let selectedClient: { label: string; dir: string } | undefined;
+      for (const candidate of clientCandidates) {
+        if (selectedClient) {
+          break;
+        }
+
+        if (yield* fs.exists(candidate.dir)) {
+          selectedClient = candidate;
+        }
+      }
+
+      if (selectedClient) {
+        yield* fs.copy(selectedClient.dir, clientTarget);
         yield* applyDevelopmentIconOverrides(repoRoot, serverDir);
-        yield* Effect.log("[cli] Bundled web app into dist/client");
+        yield* Effect.log(`[cli] Bundled ${selectedClient.label} app into dist/client`);
       } else {
-        yield* Effect.logWarning("[cli] Web dist not found — skipping client bundle.");
+        yield* Effect.logWarning("[cli] No web client dist found — skipping client bundle.");
       }
     }),
 ).pipe(Command.withDescription("Build the server package (tsdown + bundle web client)."));

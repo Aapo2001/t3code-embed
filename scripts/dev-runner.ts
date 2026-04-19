@@ -32,6 +32,8 @@ const MODE_ARGS = {
   ],
   "dev:server": ["run", "dev", "--filter=t3"],
   "dev:web": ["run", "dev", "--filter=@t3tools/web"],
+  "dev:web-svelte": ["run", "dev", "--filter=@t3tools/web-svelte"],
+  "dev:sveltekit": ["run", "dev", "--filter=@t3tools/web-svelte", "--filter=t3", "--parallel"],
   "dev:desktop": ["run", "dev", "--filter=@t3tools/desktop", "--filter=@t3tools/web", "--parallel"],
 } as const satisfies Record<string, ReadonlyArray<string>>;
 

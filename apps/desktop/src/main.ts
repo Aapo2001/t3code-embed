@@ -740,6 +740,7 @@ function resolveDesktopStaticDir(): string | null {
   const candidates = [
     Path.join(appRoot, "apps/server/dist/client"),
     Path.join(appRoot, "apps/web/dist"),
+    Path.join(appRoot, "apps/web-svelte/build"),
   ];
 
   for (const candidate of candidates) {
