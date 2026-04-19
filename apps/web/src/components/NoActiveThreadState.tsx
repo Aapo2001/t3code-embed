@@ -1,5 +1,5 @@
 import { scopeProjectRef, scopeThreadRef } from "@t3tools/client-runtime";
-import { ArrowUpRightIcon, PlusIcon, SparklesIcon } from "lucide-react";
+import { ArrowUpRightIcon, ChevronRightIcon, PlusIcon, SparklesIcon } from "lucide-react";
 import { useNavigate } from "@tanstack/react-router";
 import { useCallback, useMemo, useState } from "react";
 import { useShallow } from "zustand/react/shallow";
@@ -56,7 +56,7 @@ function activityCellClass(count: number): string {
 export function NoActiveThreadState() {
   const navigate = useNavigate();
   const { defaultProjectRef, handleNewThread } = useHandleNewThread();
-  const [activeTab, setActiveTab] = useState<OverviewTab>("overview");
+  const [activeTab, setActiveTab] = useState<OverviewTab>("sessions");
   const [activeRange, setActiveRange] = useState<OverviewRange>("all");
   const projects = useStore(useShallow((state) => selectProjectsAcrossEnvironments(state)));
   const threads = useStore(useShallow((state) => selectSidebarThreadsAcrossEnvironments(state)));
@@ -220,14 +220,14 @@ export function NoActiveThreadState() {
             </span>
           ) : (
             <div className="flex items-center gap-2">
-              <SidebarTrigger className="size-8 shrink-0 rounded-xl border border-border/80 bg-card/60 md:hidden" />
+              <SidebarTrigger className="size-8 shrink-0 rounded-md border border-border/80 bg-card md:hidden" />
               <span className="text-sm font-medium text-foreground/88">Code</span>
             </div>
           )}
 
           <button
             type="button"
-            className="app-pill inline-flex items-center gap-2 rounded-[14px] px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
+            className="inline-flex items-center gap-2 rounded-md border border-border bg-card px-3 py-2 text-sm text-foreground transition-colors hover:bg-accent disabled:cursor-not-allowed disabled:opacity-60"
             disabled={!defaultProjectRef}
             onClick={handleCreateSession}
           >
@@ -236,19 +236,17 @@ export function NoActiveThreadState() {
           </button>
         </header>
 
-        <div className="mx-auto flex w-full max-w-[760px] flex-1 flex-col">
+        <div className="mx-auto flex w-full max-w-[1080px] flex-1 flex-col">
           <div className="mb-8 flex items-center gap-3">
-            <span className="inline-flex size-10 shrink-0 items-center justify-center rounded-2xl bg-primary/14 text-primary">
-              <SparklesIcon className="size-5" />
-            </span>
+            <SparklesIcon className="size-5 shrink-0 text-primary" />
             <h1 className="text-3xl font-semibold tracking-tight text-foreground sm:text-4xl">
-              What&apos;s up next?
+              Welcome back
             </h1>
           </div>
 
-          <section className="app-panel rounded-[26px] px-4 py-4 sm:px-5 sm:py-5">
+          <section className="app-panel rounded-xl px-4 py-4 sm:px-5 sm:py-5">
             <div className="mb-4 flex flex-wrap items-center justify-between gap-3">
-              <div className="app-pill inline-flex rounded-[14px] p-1">
+              <div className="inline-flex rounded-md border border-border bg-card p-1">
                 {(
                   [
                     ["overview", "Overview"],
@@ -259,7 +257,7 @@ export function NoActiveThreadState() {
                     key={value}
                     type="button"
                     className={cn(
-                      "rounded-[10px] px-4 py-1.5 text-sm font-medium transition-colors",
+                      "rounded-md px-4 py-1.5 text-sm font-medium transition-colors",
                       activeTab === value
                         ? "bg-card text-foreground"
                         : "text-muted-foreground/72 hover:text-foreground",
@@ -271,29 +269,31 @@ export function NoActiveThreadState() {
                 ))}
               </div>
 
-              <div className="app-pill inline-flex rounded-[14px] p-1">
-                {(
-                  [
-                    ["all", "All"],
-                    ["30d", "30d"],
-                    ["7d", "7d"],
-                  ] as const
-                ).map(([value, label]) => (
-                  <button
-                    key={value}
-                    type="button"
-                    className={cn(
-                      "rounded-[10px] px-3 py-1.5 text-sm font-medium transition-colors",
-                      activeRange === value
-                        ? "bg-card text-foreground"
-                        : "text-muted-foreground/72 hover:text-foreground",
-                    )}
-                    onClick={() => setActiveRange(value)}
-                  >
-                    {label}
-                  </button>
-                ))}
-              </div>
+              {activeTab === "overview" ? (
+                <div className="inline-flex rounded-md border border-border bg-card p-1">
+                  {(
+                    [
+                      ["all", "All"],
+                      ["30d", "30d"],
+                      ["7d", "7d"],
+                    ] as const
+                  ).map(([value, label]) => (
+                    <button
+                      key={value}
+                      type="button"
+                      className={cn(
+                        "rounded-md px-3 py-1.5 text-sm font-medium transition-colors",
+                        activeRange === value
+                          ? "bg-card text-foreground"
+                          : "text-muted-foreground/72 hover:text-foreground",
+                      )}
+                      onClick={() => setActiveRange(value)}
+                    >
+                      {label}
+                    </button>
+                  ))}
+                </div>
+              ) : null}
             </div>
 
             {activeTab === "overview" ? (
@@ -302,7 +302,7 @@ export function NoActiveThreadState() {
                   {overviewCards.map((card) => (
                     <div
                       key={card.label}
-                      className="rounded-[14px] bg-white/[0.045] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
+                      className="rounded-lg bg-white/[0.045] px-3 py-3 shadow-[inset_0_1px_0_rgba(255,255,255,0.02)]"
                     >
                       <div className="text-muted-foreground/64 text-sm">{card.label}</div>
                       <div className="mt-1 truncate text-2xl font-semibold tracking-tight text-foreground">
@@ -312,7 +312,7 @@ export function NoActiveThreadState() {
                   ))}
                 </div>
 
-                <div className="mt-3 rounded-[18px] bg-white/[0.03] px-3 py-3.5">
+                <div className="mt-3 rounded-lg bg-white/[0.03] px-3 py-3.5">
                   <div className="grid auto-cols-max grid-flow-col grid-rows-7 gap-1.5 overflow-hidden">
                     {activityCells.map((cell) => (
                       <div
@@ -335,7 +335,7 @@ export function NoActiveThreadState() {
                 </div>
               </>
             ) : recentSessions.length === 0 ? (
-              <div className="flex min-h-52 items-center justify-center rounded-[18px] bg-white/[0.03] px-6 text-center">
+              <div className="flex min-h-52 items-center justify-center rounded-lg bg-white/[0.03] px-6 text-center">
                 <div>
                   <p className="text-lg font-medium text-foreground">No sessions yet</p>
                   <p className="mt-2 text-sm leading-6 text-muted-foreground/68">
@@ -352,7 +352,7 @@ export function NoActiveThreadState() {
                     <button
                       key={`${thread.environmentId}:${thread.id}`}
                       type="button"
-                      className="flex w-full items-center gap-4 rounded-[18px] bg-white/[0.035] px-4 py-3 text-left transition-colors hover:bg-accent/86 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
+                      className="flex w-full items-center gap-4 rounded-lg bg-white/[0.035] px-4 py-3 text-left transition-colors hover:bg-accent/86 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring"
                       onClick={() => {
                         void navigate({
                           to: "/$environmentId/$threadId",
@@ -383,7 +383,7 @@ export function NoActiveThreadState() {
 
                       <div className="flex shrink-0 items-center gap-3 text-xs text-muted-foreground/60">
                         <span>{timestamp}</span>
-                        <ArrowUpRightIcon className="size-4" />
+                        <ChevronRightIcon className="size-4" />
                       </div>
                     </button>
                   );
@@ -394,15 +394,15 @@ export function NoActiveThreadState() {
 
           <div className="mt-auto pt-6">
             <div className="mb-3 flex flex-wrap gap-2 text-sm text-muted-foreground/78">
-              <span className="app-pill rounded-[14px] px-3 py-1.5">Local</span>
-              <span className="app-pill max-w-full truncate rounded-[14px] px-3 py-1.5">
+              <span className="rounded-md border border-border bg-card px-3 py-1.5">Local</span>
+              <span className="max-w-full truncate rounded-md border border-border bg-card px-3 py-1.5">
                 {defaultProject?.name ?? "Select folder..."}
               </span>
             </div>
 
             <button
               type="button"
-              className="app-panel flex h-16 w-full items-center justify-between rounded-[20px] px-4 text-left text-muted-foreground/74 transition-colors hover:bg-accent/86 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"
+              className="app-panel flex h-16 w-full items-center justify-between rounded-xl px-4 text-left text-muted-foreground/74 transition-colors hover:bg-accent/86 hover:text-foreground focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring disabled:cursor-not-allowed disabled:opacity-60"
               disabled={!defaultProjectRef}
               onClick={handleCreateSession}
             >

@@ -31,9 +31,9 @@ export function AppSidebarLayout({ children }: { children: ReactNode }) {
     <SidebarProvider defaultOpen className="app-desktop-shell min-h-dvh">
       <Sidebar
         side="left"
-        variant="floating"
+        variant="sidebar"
         collapsible="offcanvas"
-        className="text-sidebar-foreground md:p-3 md:pr-1"
+        className="border-r border-sidebar-border bg-sidebar text-sidebar-foreground"
         resizable={{
           minWidth: THREAD_SIDEBAR_MIN_WIDTH,
           shouldAcceptWidth: ({ nextWidth, wrapper }) =>

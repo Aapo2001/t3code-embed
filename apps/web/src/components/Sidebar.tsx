@@ -1940,11 +1940,11 @@ const SidebarProjectItem = memo(function SidebarProjectItem(props: SidebarProjec
 
   return (
     <>
-      <div className="group/project-header relative rounded-2xl">
+      <div className="group/project-header relative">
         <SidebarMenuButton
           ref={isManualProjectSorting ? dragHandleProps?.setActivatorNodeRef : undefined}
           size="sm"
-          className={`gap-2.5 rounded-2xl px-2.5 py-2 text-left hover:bg-accent group-hover/project-header:bg-accent/94 group-hover/project-header:text-sidebar-accent-foreground ${
+          className={`gap-2.5 rounded-md px-2.5 py-2 text-left hover:bg-accent group-hover/project-header:bg-accent/94 group-hover/project-header:text-sidebar-accent-foreground ${
             isManualProjectSorting ? "cursor-grab active:cursor-grabbing" : "cursor-pointer"
           }`}
           {...(isManualProjectSorting && dragHandleProps ? dragHandleProps.attributes : {})}
@@ -2359,20 +2359,20 @@ const SidebarChromeHeader = memo(function SidebarChromeHeader({
 }) {
   const wordmark = (
     <div className="flex items-center gap-2">
-      <SidebarTrigger className="size-8 shrink-0 rounded-xl border border-sidebar-border/80 bg-sidebar-accent/70 md:hidden" />
+      <SidebarTrigger className="size-8 shrink-0 rounded-md border border-sidebar-border/80 bg-sidebar-accent md:hidden" />
       <Tooltip>
         <TooltipTrigger
           render={
             <Link
               aria-label="Go to threads"
-              className="ml-1 inline-flex min-w-0 cursor-pointer items-center gap-2 rounded-xl px-1 py-1 outline-hidden ring-ring transition-colors hover:text-foreground focus-visible:ring-2"
+              className="ml-1 inline-flex min-w-0 cursor-pointer items-center gap-2 rounded-md px-1 py-1 outline-hidden ring-ring transition-colors hover:text-foreground focus-visible:ring-2"
               to="/"
             >
               <T3Wordmark />
               <span className="truncate text-base font-semibold tracking-tight text-foreground">
                 Code
               </span>
-              <span className="rounded-full bg-muted/38 px-1.5 py-0.5 text-[8px] font-medium uppercase tracking-[0.18em] text-muted-foreground/70">
+              <span className="rounded-sm border border-border/70 bg-card px-1 py-0.5 text-[8px] font-medium tracking-[0.12em] text-muted-foreground/68">
                 {APP_STAGE_LABEL}
               </span>
             </Link>
@@ -2386,11 +2386,11 @@ const SidebarChromeHeader = memo(function SidebarChromeHeader({
   );
 
   return isElectron ? (
-    <SidebarHeader className="drag-region h-[52px] flex-row items-center gap-2 px-5 py-0 pl-[90px] wco:h-[env(titlebar-area-height)] wco:pl-[calc(env(titlebar-area-x)+1.1em)]">
+    <SidebarHeader className="drag-region h-[52px] flex-row items-center gap-2 border-b border-sidebar-border px-5 py-0 pl-[90px] wco:h-[env(titlebar-area-height)] wco:pl-[calc(env(titlebar-area-x)+1.1em)]">
       {wordmark}
     </SidebarHeader>
   ) : (
-    <SidebarHeader className="gap-3 px-4 py-3">{wordmark}</SidebarHeader>
+    <SidebarHeader className="gap-3 border-b border-sidebar-border px-4 py-3">{wordmark}</SidebarHeader>
   );
 });
 
@@ -2407,7 +2407,7 @@ const SidebarChromeFooter = memo(function SidebarChromeFooter() {
         <SidebarMenuItem>
           <SidebarMenuButton
             size="sm"
-            className="gap-2 rounded-[18px] px-2.5 py-2 text-muted-foreground/82 hover:bg-accent hover:text-foreground"
+            className="gap-2 rounded-md px-2.5 py-2 text-muted-foreground/82 hover:bg-accent hover:text-foreground"
             onClick={handleSettingsClick}
           >
             <SettingsIcon className="size-3.5" />
@@ -2532,7 +2532,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
               render={
                 <SidebarMenuButton
                   size="sm"
-                  className="app-pill h-9 gap-2 px-3 text-muted-foreground/78 hover:bg-accent hover:text-foreground focus-visible:ring-0"
+                  className="h-9 gap-2 rounded-md border border-sidebar-border bg-sidebar-accent px-3 text-muted-foreground/78 hover:bg-sidebar-accent hover:text-foreground focus-visible:ring-0"
                   data-testid="command-palette-trigger"
                 />
               }
@@ -2553,7 +2553,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
           <SidebarMenuItem>
             <SidebarMenuButton
               size="sm"
-              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/88 hover:bg-sidebar-accent"
+              className="gap-2.5 rounded-md px-2.5 py-2 text-sidebar-foreground/88 hover:bg-sidebar-accent"
               disabled={!canCreateSession}
               onClick={handleCreateSession}
             >
@@ -2564,7 +2564,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
           <SidebarMenuItem>
             <SidebarMenuButton
               size="sm"
-              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              className="gap-2.5 rounded-md px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
               onClick={handleOpenCommandPalette}
             >
               <BoltIcon className="size-3.5" />
@@ -2574,7 +2574,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
           <SidebarMenuItem>
             <SidebarMenuButton
               size="sm"
-              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              className="gap-2.5 rounded-md px-2.5 py-2 text-sidebar-foreground/72 hover:bg-sidebar-accent hover:text-sidebar-foreground"
               onClick={handleOpenCustomize}
             >
               <SettingsIcon className="size-3.5" />
@@ -2584,7 +2584,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
           <SidebarMenuItem>
             <SidebarMenuButton
               size="sm"
-              className="gap-2.5 rounded-[18px] px-2.5 py-2 text-sidebar-foreground/58 hover:bg-sidebar-accent hover:text-sidebar-foreground"
+              className="gap-2.5 rounded-md px-2.5 py-2 text-sidebar-foreground/58 hover:bg-sidebar-accent hover:text-sidebar-foreground"
               onClick={openAddProject}
             >
               <ChevronDownIcon className="size-3.5" />
@@ -2618,8 +2618,8 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
       ) : null}
       <SidebarGroup className="px-3 py-3">
         <div className="mb-2 flex items-center justify-between pl-1.5 pr-1">
-          <span className="text-[10px] font-medium uppercase tracking-[0.22em] text-muted-foreground/54">
-            Recents
+          <span className="text-[11px] font-medium text-muted-foreground/68">
+            Sessions
           </span>
           <div className="flex items-center gap-1">
             <ProjectSortMenu
@@ -2637,7 +2637,7 @@ const SidebarProjectsContent = memo(function SidebarProjectsContent(
                     type="button"
                     aria-label="Add project"
                     data-testid="sidebar-add-project-trigger"
-                    className="inline-flex size-6 cursor-pointer items-center justify-center rounded-xl text-muted-foreground/62 transition-colors hover:bg-accent hover:text-foreground"
+                    className="inline-flex size-6 cursor-pointer items-center justify-center rounded-md text-muted-foreground/62 transition-colors hover:bg-accent hover:text-foreground"
                     onClick={openAddProject}
                   />
                 }

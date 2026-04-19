@@ -162,30 +162,18 @@
 }
 
 .app-desktop-shell {
-  background:
-    radial-gradient(
-      64rem 28rem at 28% -8%,
-      color-mix(in srgb, var(--primary) 9%, transparent),
-      transparent 56%
-    ),
-    radial-gradient(
-      52rem 24rem at 100% 100%,
-      color-mix(in srgb, var(--color-blue-500) 5%, transparent),
-      transparent 64%
-    ),
-    var(--app-shell-background);
+  background: var(--app-shell-background);
 }
 
 .app-panel {
   border: 1px solid var(--app-shell-border);
-  background: color-mix(in srgb, var(--card) 94%, var(--background));
-  box-shadow: var(--app-panel-shadow);
-  backdrop-filter: blur(16px);
+  background: color-mix(in srgb, var(--card) 96%, var(--background));
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
 }
 
 .app-pill {
   border: 1px solid color-mix(in srgb, var(--border) 94%, transparent);
-  background: color-mix(in srgb, var(--muted) 58%, var(--background));
+  background: color-mix(in srgb, var(--muted) 72%, var(--background));
 }
 
 body {
